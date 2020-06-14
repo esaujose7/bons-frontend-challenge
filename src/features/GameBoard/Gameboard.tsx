@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Gameboard = () => {
+const Gameboard: React.FC = () => {
   return (
     <div>
-      
+      hola
     </div>
   )
 }
