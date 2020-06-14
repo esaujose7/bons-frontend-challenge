@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useGameActions } from '../../hooks/game';
 
 const Login: React.FC = () => {
+  const { startGame } = useGameActions();
   const [playerName, setPlayerName] = useState('');
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -9,7 +11,9 @@ const Login: React.FC = () => {
 
   const handleOnSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(playerName);
+    if (playerName !== '') {
+      startGame(playerName);
+    }
   };
 
   return (
@@ -17,7 +21,7 @@ const Login: React.FC = () => {
       <h1>Welcome to Bons Game!</h1>
       <form onSubmit={handleOnSubmit}>
         <label htmlFor="playerName">What's your name?</label>
-        <input type="text" name="playerName" id="playerName" value={playerName} onChange={(e) => { setPlayerName(e.target.value) }} required />
+        <input type="text" name="playerName" id="playerName" value={playerName} onChange={handleOnChange} required />
         <button>LET'S PLAY</button>
       </form>
     </>
