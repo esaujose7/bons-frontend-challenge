@@ -1,22 +1,31 @@
-import React, { useReducer, createContext } from 'react';
+import React, { useReducer } from 'react';
 import reducer, { initialState } from './reducer';
+import { GAME_START } from './types';
 import GameService from '../../services/GameService';
+import { createCtx } from '../../helpers';
 
-const GameContext = createContext({ state: initialState, actions: {  } });
+type GameContextType = {
+  state: typeof initialState,
+  actions: {
+    startGame: (playerName: string) => void
+  }
+};
+
+const [GameContext, Provider] = createCtx<GameContextType>();
 
 const GameContextProvider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const startGame = (playerName: string): void => {
     GameService.start(playerName)
-      .then(data => dispatch({ type: 'GAME_START', payload: data }))
+      .then(data => dispatch({ type: GAME_START, payload: data }))
       .catch(err => console.error(err));
   };
   
   return (
-    <GameContext.Provider value={{ state, actions: { startGame } }}>
+    <Provider value={{ state, actions: { startGame } }}>
       {children}
-    </GameContext.Provider>
+    </Provider>
   );
 };
 
