@@ -1,9 +1,13 @@
 import React from 'react'
 
-const EndGameModal = () => {
+interface Props {
+  result: 'WIN' | 'LOSE';
+};
+
+const EndGameModal: React.FC<Props> = ({ result }) => {
   return (
     <div>
-      
+      {result}
     </div>
   )
 }
