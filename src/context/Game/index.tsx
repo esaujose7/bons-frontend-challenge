@@ -11,7 +11,7 @@ type GameContextType = {
   }
 };
 
-const [GameContext, Provider] = createCtx<GameContextType>();
+const [useGameContext, Provider] = createCtx<GameContextType>();
 
 const GameContextProvider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -19,9 +19,9 @@ const GameContextProvider: React.FC = ({ children }) => {
   const startGame = (playerName: string): void => {
     GameService.start(playerName)
       .then(data => dispatch({ type: GAME_START, payload: data }))
-      .catch(err => console.error(err));
+      .catch(err => console.error(err)); // error handle properly here
   };
-  
+
   return (
     <Provider value={{ state, actions: { startGame } }}>
       {children}
@@ -29,4 +29,4 @@ const GameContextProvider: React.FC = ({ children }) => {
   );
 };
 
-export { GameContext as default, GameContextProvider };
+export { useGameContext as default, GameContextProvider };
