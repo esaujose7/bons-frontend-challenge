@@ -1,29 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
+
 import Login from './features/Login';
 import GameBoard from './features/GameBoard';
 import EndGameModal from './features/EndGameModal';
 
-// App states
-const IDLE = 'IDLE';
-const ONGOING = 'ONGOING';
-const WIN = 'WIN';
-const LOSE = 'LOSE';
-
-type GameState = "IDLE" | "ONGOING" | "WIN" | "LOSE";
+import GameContext from './context/Game';
 
 function App() {
-  const [appState, setAppState] = React.useState<GameState>(IDLE);
-
-  if (appState === IDLE) {
-    return <Login  />;
+  switch(useContext(GameContext).status) {
+    case 'IDLE':
+      return <Login />
+    case 'ONGOING':
+      return <GameBoard />
+    case 'WIN':
+      return <EndGameModal result="WIN" />
+    case 'LOSE':
+      return <EndGameModal result="LOSE" />
+    
   }
-
-  return (
-    <>
-      {[WIN, LOSE].includes(appState) && <EndGameModal />}
-      <GameBoard />
-    </>
-  );
 }
 
 export default App;
