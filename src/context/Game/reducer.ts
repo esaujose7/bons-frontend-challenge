@@ -1,12 +1,4 @@
-type GameStatus = 'IDLE' | 'ONGOING' | 'WIN' | 'LOSE';
-
-export interface GameState {
-  id: string | null;
-  status: GameStatus;
-  currentTurn: number | null;
-  maxTurns: number | null;
-  turnsLeft: number | null;
-};
+import { GameState } from '../../types';
 
 export const initialState: GameState = {
   id: null,
@@ -16,7 +8,7 @@ export const initialState: GameState = {
   turnsLeft: null
 };
 
-export default function reducer(state = initialState, action: { type: string, action: any }) {
+export default function reducer(state = initialState, action: { type: string, payload: Object | undefined }) {
   switch(action.type) {
     default:
       return state;
