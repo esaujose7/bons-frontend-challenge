@@ -6,9 +6,12 @@ import EndGameModal from './features/EndGameModal';
 
 import GameContext from './context/Game';
 
-function App() {
+import './App.scss';
+
+const App: React.FC = () => {
   switch(useContext(GameContext).status) {
     case 'IDLE':
+    default:
       return <Login />
     case 'ONGOING':
       return <GameBoard />
@@ -16,7 +19,6 @@ function App() {
       return <EndGameModal result="WIN" />
     case 'LOSE':
       return <EndGameModal result="LOSE" />
-    
   }
 }
 
