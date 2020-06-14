@@ -1,15 +1,15 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
 import Login from './features/Login';
 import GameBoard from './features/GameBoard';
 import EndGameModal from './features/EndGameModal';
 
-import GameContext from './context/Game';
+import { useGameState } from './hooks/game';
 
 import './App.scss';
 
 const App: React.FC = () => {
-  switch(useContext(GameContext).status) {
+  switch(useGameState().status) {
     case 'IDLE':
     default:
       return <Login />
