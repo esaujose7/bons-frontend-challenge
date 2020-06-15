@@ -25,7 +25,7 @@ export default function reducer(state = initialState, action: PlayerActionTypes)
     case LOAD_CARDS:
       return {
         ...state,
-        cards: action.payload
+        cards: action.payload.map(({ id, effect, value }) => ({ id, effect, value }))
       }
     default:
       return state;
