@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function api<T>(url: string, options: Object = {}): Promise<T> {
+export function api<T>(url: RequestInfo, options: RequestInit | undefined): Promise<T> {
   return fetch(url, options)
     .then(response => {
       if (!response.ok) {
