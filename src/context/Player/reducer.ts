@@ -2,11 +2,11 @@ import { PlayerState } from '../../types';
 import { LOAD_CARDS, LOAD_PLAYER, PlayerActionTypes } from './types';
 
 export const initialState: PlayerState = {
-  id: null,
-  hp: null,
-  maxHp: null,
-  shield: null,
-  name: null,
+  id: '',
+  hp: 0,
+  maxHp: 0,
+  shield: 0,
+  name: '',
   cards: []
 };
 
