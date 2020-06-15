@@ -8,18 +8,25 @@ import { useGameState } from './hooks/game';
 import { IDLE, ONGOING, WIN, LOSE } from './types';
 
 import './App.scss';
+import { PlayerContextProvider } from './context/Player';
 
 const App: React.FC = () => {
-  switch(useGameState().status) {
+  const { id: gameId, currentTurn, status } = useGameState();
+
+  switch(status) {
     case IDLE:
     default:
-      return <Login />
+      return <Login />;
     case ONGOING:
-      return <GameBoard />
+      return (
+        <PlayerContextProvider gameId={gameId} currentTurn={currentTurn}>
+            <GameBoard />
+        </PlayerContextProvider>
+      );
     case WIN:
-      return <EndGameModal result={WIN} />
+      return <EndGameModal result={WIN} />;
     case LOSE:
-      return <EndGameModal result={LOSE} />
+      return <EndGameModal result={LOSE} />;
   }
 }
 
