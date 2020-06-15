@@ -20,18 +20,19 @@ const PlayerContextProvider: React.FC<Props> = ({ children, gameId, currentTurn 
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    const resolveOnceLoaded = (data: PlayerEntity) => dispatch({ type: LOAD_PLAYER, payload: data })
+    const resolveOncePlayerLoaded = (data: PlayerEntity) => dispatch({ type: LOAD_PLAYER, payload: data })
     if (state.id === '') {
-      PlayerService.getByGameId(gameId).then(resolveOnceLoaded);
+      PlayerService.getByGameId(gameId).then(resolveOncePlayerLoaded).catch(err => { console.error('fail loading the user: ', err) });
+    } else {
+      PlayerService.getById(state.id).then(resolveOncePlayerLoaded).catch(err => { console.error('fail loading the user', err) });
     }
-    PlayerService.getById(state.id).then(resolveOnceLoaded);
-  }, [currentTurn, gameId, state.id]);
+  }, [currentTurn, state.id, gameId]);
 
   useEffect(() => {
     if (state.id !== '') {
       PlayerService.getCards(state.id).then(data => dispatch({ type: LOAD_CARDS, payload: data }));
     }
-  }, [currentTurn, state.id])
+  }, [currentTurn, state.id]);
 
   return (
     <Provider value={{ state }}>
