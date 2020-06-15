@@ -23,18 +23,18 @@ const PlayerContextProvider: React.FC<Props> = ({ children, gameId, currentTurn 
   const isPlayerLoaded = () => playerId !== '';
 
   useEffect(() => {
-      PlayerService.getByGameId(gameId).then(resolveOncePlayerLoaded).catch(err => { console.error('fail loading the user: ', err) });
+      PlayerService.getByGameId(gameId).then(resolveOncePlayerLoaded).catch(err => { console.error('fail loading the user: ', err) }).catch(console.error);
   }, [gameId]);
 
   useEffect(() => {
     if (isPlayerLoaded()) {
-      PlayerService.getById(playerId).then(resolveOncePlayerLoaded).catch(err => { console.error('fail loading the user', err) });
+      PlayerService.getById(playerId).then(resolveOncePlayerLoaded).catch(err => { console.error('fail loading the user', err) }).catch(console.error);
     }
   }, [currentTurn])
 
   useEffect(() => {
     if (isPlayerLoaded()) {
-      PlayerService.getCards(playerId).then(data => dispatch({ type: LOAD_CARDS, payload: data }));
+      PlayerService.getCards(playerId).then(data => dispatch({ type: LOAD_CARDS, payload: data })).catch(console.error);
     }
   }, [currentTurn, playerId]);
 

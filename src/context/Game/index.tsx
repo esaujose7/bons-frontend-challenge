@@ -20,7 +20,7 @@ const GameContextProvider: React.FC = ({ children }) => {
   const startGame = (playerName: string): void => {
     GameService.start(playerName)
       .then(data => dispatch({ type: GAME_START, payload: data }))
-      .catch(err => console.error(err)); // error handle properly here
+      .catch(console.error); // error handle properly here
   };
 
   return (
