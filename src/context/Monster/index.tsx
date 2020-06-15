@@ -39,5 +39,11 @@ const MonsterContextProvider: React.FC<Props> = ({ children, gameId, currentTurn
   );
 };
 
-export { useMonsterContext as default, MonsterContextProvider };
+
+function useMonsterState() {
+  const { state } = useMonsterContext();
+  return state;
+}
+
+export { useMonsterContext as default, MonsterContextProvider, useMonsterState };
 

@@ -30,4 +30,15 @@ const GameContextProvider: React.FC = ({ children }) => {
   );
 };
 
-export { useGameContext as default, GameContextProvider };
+
+function useGameState() {
+  const { state } = useGameContext();
+  return state;
+}
+
+function useGameActions() {
+  const { actions } = useGameContext();
+  return actions;
+}
+
+export { useGameContext as default, GameContextProvider, useGameState, useGameActions };

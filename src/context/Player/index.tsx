@@ -43,6 +43,12 @@ const PlayerContextProvider: React.FC<Props> = ({ children, gameId, currentTurn 
       {children}
     </Provider>
   );
-};
+}
 
-export { usePlayerContext as default, PlayerContextProvider };
+
+function usePlayerState() {
+  const { state } = usePlayerContext();
+  return state;
+}
+
+export { usePlayerContext as default, PlayerContextProvider, usePlayerState };
