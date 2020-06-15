@@ -1,13 +1,28 @@
-import { GameEntity } from '../types';
+import { GameEntity, MonsterEffects } from '../types';
 import { api } from '../helpers';
 
 class GameService {
-  static async start(playerName: string) {
-    return api<GameEntity>(process.env.REACT_APP_BONS_BASE_URL + '/games', {
+  static start(playerName: string) {
+    return api<GameEntity>('/games', {
       method: 'POST',
       body: JSON.stringify({ name: playerName }),
       headers: { 'Content-Type': 'application/json' }
     });
+  }
+
+  static getById(id: string) {
+    return api<GameEntity>(`/games/${id}`);
+  }
+
+  static playNextTurn(id: string, cardId: string | null = null) {
+    if (cardId) {
+      return api<{ game: GameEntity, monsterEffect: { effect: MonsterEffects, value: number } }>(`/games/${id}/next-turn`, {
+        method: 'POST',
+        body: JSON.stringify({ card: cardId }),
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+    return api<{ game: GameEntity, monsterEffect: { effect: MonsterEffects, value: number } }>(`/games/${id}/next-turn`, { method: 'POST' });
   }
 }
 
