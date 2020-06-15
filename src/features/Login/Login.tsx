@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useGameActions } from '../../hooks/game';
+import { useGameActions } from '../../context/Game';
 
 const Login: React.FC = () => {
   const { startGame } = useGameActions();

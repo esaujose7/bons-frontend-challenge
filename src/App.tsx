@@ -4,17 +4,18 @@ import Login from './features/Login';
 import GameBoard from './features/GameBoard';
 import EndGameModal from './features/EndGameModal';
 
-import { useGameState } from './hooks/game';
-import { IDLE, ONGOING, WIN, LOSE } from './types';
-
-import './App.scss';
+import { useGameState } from './context/Game';
 import { PlayerContextProvider } from './context/Player';
 import { MonsterContextProvider } from './context/Monster';
 
-const App: React.FC = () => {
-  const { id: gameId, currentTurn, status } = useGameState();
+import { IDLE, ONGOING, WIN, LOSE } from './types';
 
-  switch(status) {
+import './App.scss';
+
+const App: React.FC = () => {
+  const { id: gameId, currentTurn, status: gameStatus } = useGameState();
+
+  switch(gameStatus) {
     case IDLE:
     default:
       return <Login />;
