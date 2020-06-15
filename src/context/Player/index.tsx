@@ -45,7 +45,6 @@ const PlayerContextProvider: React.FC<Props> = ({ children, gameId, currentTurn 
   );
 }
 
-
 function usePlayerState() {
   const { state } = usePlayerContext();
   return state;

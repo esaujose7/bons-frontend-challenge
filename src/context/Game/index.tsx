@@ -30,7 +30,6 @@ const GameContextProvider: React.FC = ({ children }) => {
   );
 };
 
-
 function useGameState() {
   const { state } = useGameContext();
   return state;
