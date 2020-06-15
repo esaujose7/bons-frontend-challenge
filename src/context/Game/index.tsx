@@ -2,10 +2,11 @@ import React, { useReducer } from 'react';
 import reducer, { initialState } from './reducer';
 import { GAME_START } from './types';
 import GameService from '../../services/GameService';
+import { GameState } from '../../types';
 import { createCtx } from '../../helpers';
 
 type GameContextType = {
-  state: typeof initialState,
+  state: GameState,
   actions: {
     startGame: (playerName: string) => void
   }

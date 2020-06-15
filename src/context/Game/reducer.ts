@@ -1,22 +1,23 @@
-import { GameState } from '../../types';
+import { GameState, IDLE } from '../../types';
 import { GAME_START, GameActionTypes } from './types';
 
 export const initialState: GameState = {
-  id: null,
-  status: 'IDLE',
-  currentTurn: null,
-  maxTurns: null,
-  turnsLeft: null
+  id: '',
+  status: IDLE,
+  currentTurn: 0,
+  maxTurns: 0,
+  turnsLeft: 0
 };
 
 export default function reducer(state = initialState, action: GameActionTypes): GameState {
   switch(action.type) {
     case GAME_START:
+      const { id, currentTurn, maxTurns, turnsLeft } = action.payload
       return {
-        id: action.payload.id,
-        currentTurn: action.payload.currentTurn,
-        maxTurns: action.payload.maxTurns,
-        turnsLeft: action.payload.turnsLeft,
+        id,
+        currentTurn,
+        maxTurns,
+        turnsLeft,
         status: 'ONGOING',
       };
     default:

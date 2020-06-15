@@ -1,25 +1,29 @@
-export type GameResult = 'WIN' | 'LOSE';
+export const IDLE = 'IDLE';
+export const ONGOING = 'ONGOING';
+export const WIN = 'WIN';
+export const LOSE = 'LOSE';
 
-export type GameStatus = 'IDLE' | 'ONGOING' | GameResult;
+export type GameResult = typeof WIN | typeof LOSE;
+export type GameStatus = typeof IDLE | typeof ONGOING | GameResult;
 
 export interface GameEntity {
-  id: string | null;
-  currentTurn: number | null;
-  maxTurns: number | null;
-  turnsLeft: number | null;
+  id: string;
+  currentTurn: number;
+  maxTurns: number;
+  turnsLeft: number;
 }
 
 export interface GameState extends GameEntity {
-  status: GameStatus;
+  status: GameStatus; 
 };
 
-export interface PlayerEntity {
-  id: string | null;
-  hp: number | null;
-  maxHp: number | null;
-  shield: number | null;
-  name: string | null;
-  cards: Card[] | [];
+export type PlayerEntity = {
+  id: string;
+  hp: number;
+  maxHp: number;
+  shield: number;
+  name: string;
+  cards: Card[];
 };
 
 export interface PlayerState extends PlayerEntity {
