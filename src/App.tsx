@@ -9,6 +9,7 @@ import { IDLE, ONGOING, WIN, LOSE } from './types';
 
 import './App.scss';
 import { PlayerContextProvider } from './context/Player';
+import { MonsterContextProvider } from './context/Monster';
 
 const App: React.FC = () => {
   const { id: gameId, currentTurn, status } = useGameState();
@@ -20,7 +21,9 @@ const App: React.FC = () => {
     case ONGOING:
       return (
         <PlayerContextProvider gameId={gameId} currentTurn={currentTurn}>
+          <MonsterContextProvider gameId={gameId} currentTurn={currentTurn}>  
             <GameBoard />
+          </MonsterContextProvider>
         </PlayerContextProvider>
       );
     case WIN:

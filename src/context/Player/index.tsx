@@ -18,21 +18,25 @@ const [usePlayerContext, Provider] = createCtx<PlayerContextType>();
 
 const PlayerContextProvider: React.FC<Props> = ({ children, gameId, currentTurn }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const playerId = state.id;
+  const resolveOncePlayerLoaded = (data: PlayerEntity) => dispatch({ type: LOAD_PLAYER, payload: data })
+  const isPlayerLoaded = () => playerId !== '';
 
   useEffect(() => {
-    const resolveOncePlayerLoaded = (data: PlayerEntity) => dispatch({ type: LOAD_PLAYER, payload: data })
-    if (state.id === '') {
       PlayerService.getByGameId(gameId).then(resolveOncePlayerLoaded).catch(err => { console.error('fail loading the user: ', err) });
-    } else {
-      PlayerService.getById(state.id).then(resolveOncePlayerLoaded).catch(err => { console.error('fail loading the user', err) });
-    }
-  }, [currentTurn, state.id, gameId]);
+  }, [gameId]);
 
   useEffect(() => {
-    if (state.id !== '') {
-      PlayerService.getCards(state.id).then(data => dispatch({ type: LOAD_CARDS, payload: data }));
+    if (isPlayerLoaded()) {
+      PlayerService.getById(playerId).then(resolveOncePlayerLoaded).catch(err => { console.error('fail loading the user', err) });
     }
-  }, [currentTurn, state.id]);
+  }, [currentTurn])
+
+  useEffect(() => {
+    if (isPlayerLoaded()) {
+      PlayerService.getCards(playerId).then(data => dispatch({ type: LOAD_CARDS, payload: data }));
+    }
+  }, [currentTurn, playerId]);
 
   return (
     <Provider value={{ state }}>
