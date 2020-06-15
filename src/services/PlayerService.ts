@@ -1,5 +1,5 @@
 import { PlayerEntity, Card } from '../types';
-import { api } from '../helpers';
+import { api } from '../utilities';
 
 class PlayerService {
   static getByGameId(gameId: string) {

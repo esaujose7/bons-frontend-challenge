@@ -1,5 +1,5 @@
 import { GameEntity, MonsterEffects } from '../types';
-import { api } from '../helpers';
+import { api } from '../utilities';
 
 class GameService {
   static start(playerName: string) {

@@ -2,7 +2,7 @@ import React, { useReducer, useEffect } from 'react';
 import PlayerService from '../../services/PlayerService';
 import reducer, { initialState } from './reducer';
 import { PlayerState, PlayerEntity } from '../../types';
-import { createCtx } from '../../helpers';
+import { createCtx } from '../../utilities';
 import { LOAD_CARDS, LOAD_PLAYER } from './types';
 
 type Props = {

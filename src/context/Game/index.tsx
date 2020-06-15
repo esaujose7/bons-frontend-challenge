@@ -3,7 +3,7 @@ import reducer, { initialState } from './reducer';
 import { GAME_START } from './types';
 import GameService from '../../services/GameService';
 import { GameState } from '../../types';
-import { createCtx } from '../../helpers';
+import { createCtx } from '../../utilities';
 
 type GameContextType = {
   state: GameState,

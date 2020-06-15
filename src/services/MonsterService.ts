@@ -1,5 +1,5 @@
 import { MonsterEntity } from '../types';
-import { api } from '../helpers';
+import { api } from '../utilities';
 
 class MonsterService {
   static getByGameId(gameId: string) {

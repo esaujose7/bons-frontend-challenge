@@ -1,7 +1,7 @@
 import React, { useReducer, useEffect } from 'react';
 import reducer, { initialState } from './reducer';
 import MonsterService from '../../services/MonsterService';
-import { createCtx } from '../../helpers';
+import { createCtx } from '../../utilities';
 import { MonsterEntity } from '../../types';
 import {LOAD_MONSTER} from './types'
 
