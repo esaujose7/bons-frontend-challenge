@@ -1,28 +1,40 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useEffect } from 'react';
+import PlayerService from '../../services/PlayerService';
 import reducer, { initialState } from './reducer';
-import { PlayerState } from '../../types';
+import { PlayerState, PlayerEntity } from '../../types';
 import { createCtx } from '../../helpers';
-import { useGameState } from '../../hooks/game';
+import { LOAD_CARDS, LOAD_PLAYER } from './types';
+
+type Props = {
+  gameId: string,
+  currentTurn: number
+};
 
 type PlayerContextType = {
-  state: PlayerState,
-  actions: {
-    loadPlayer: () => void
-  }
+  state: PlayerState
 };
 
 const [usePlayerContext, Provider] = createCtx<PlayerContextType>();
 
-const PlayerContextProvider: React.FC = ({ children }) => {
+const PlayerContextProvider: React.FC<Props> = ({ children, gameId, currentTurn }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { id: gameId } = useGameState();
 
-  const loadPlayer = (): void => {
+  useEffect(() => {
+    const resolveOnceLoaded = (data: PlayerEntity) => dispatch({ type: LOAD_PLAYER, payload: data })
+    if (state.id === '') {
+      PlayerService.getByGameId(gameId).then(resolveOnceLoaded);
+    }
+    PlayerService.getById(state.id).then(resolveOnceLoaded);
+  }, [currentTurn, gameId, state.id]);
 
-  };
+  useEffect(() => {
+    if (state.id !== '') {
+      PlayerService.getCards(state.id).then(data => dispatch({ type: LOAD_CARDS, payload: data }));
+    }
+  }, [currentTurn, state.id])
 
   return (
-    <Provider value={{ state, actions: { loadPlayer } }}>
+    <Provider value={{ state }}>
       {children}
     </Provider>
   );
