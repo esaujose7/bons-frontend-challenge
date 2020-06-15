@@ -1,7 +1,7 @@
 import React from 'react';
 
-export function api<T>(url: RequestInfo, options: RequestInit | undefined): Promise<T> {
-  return fetch(url, options)
+export function api<T>(url: RequestInfo, options: RequestInit | undefined = undefined): Promise<T> {
+  return fetch(process.env.REACT_APP_BONS_BASE_URL + url, options)
     .then(response => {
       if (!response.ok) {
         throw new Error(`${response.status} | ${response.statusText}`);
