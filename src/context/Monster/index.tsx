@@ -4,6 +4,7 @@ import MonsterService from '../../services/MonsterService';
 import { createCtx } from '../../utilities';
 import { MonsterEntity } from '../../types';
 import {LOAD_MONSTER} from './types'
+import { useGameActions } from '../Game';
 
 type Props = {
   gameId: string,
@@ -20,17 +21,24 @@ const MonsterContextProvider: React.FC<Props> = ({ children, gameId, currentTurn
   const [state, dispatch] = useReducer(reducer, initialState);
   const monsterId = state.id;
   const isMonsterLoaded = () => monsterId !== '';
+  const { notifyGameIsWon } = useGameActions();
 
   useEffect(() => {
     MonsterService.getByGameId(gameId).then(data => dispatch({ type: LOAD_MONSTER, payload: data })).catch(console.error);
-  }, [gameId])
+  }, [gameId]);
 
 
   useEffect(() => {
     if (isMonsterLoaded()) {
       MonsterService.getById(state.id).then(data => dispatch({ type: LOAD_MONSTER, payload: data })).catch(console.error);
     }
-  }, [currentTurn])
+  }, [currentTurn]);
+
+  useEffect(() => {
+    if (state.hp <= 0) {
+      notifyGameIsWon();
+    }
+  }, [state.hp]);
 
   return (
     <Provider value={{ state }}>
