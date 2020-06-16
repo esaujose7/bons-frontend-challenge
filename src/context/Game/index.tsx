@@ -47,10 +47,10 @@ const GameContextProvider: React.FC = ({ children }) => {
   }
 
   useEffect(() => {
-    if (state.currentTurn === state.maxTurns) {
+    if (state.currentTurn === state.maxTurns && state.status === 'ONGOING') {
       notifyGameIsLost();
     }
-  }, [state.currentTurn, state.maxTurns]);
+  }, [state.currentTurn, state.maxTurns, state.status]);
 
   return (
     <Provider value={{ state, actions: { startGame, nextTurn, notifyGameIsWon, notifyGameIsLost, restartGame } }}>
