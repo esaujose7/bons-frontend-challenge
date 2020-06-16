@@ -7,7 +7,7 @@ import { Card } from '../../types';
 import { useGameState, useGameActions } from '../../context/Game';
 
 const Gameboard: React.FC = () => {
-  const { currentTurn, turnsLeft, lastMonsterEffect } = useGameState();
+  const { currentTurn, turnsLeft, lastMonsterEffect, maxTurns } = useGameState();
   const { nextTurn } = useGameActions();
   const [selectedCard, setSelectedCard] = React.useState<Card | null>(null);
   const isLastMonsterEffectHorror = lastMonsterEffect && lastMonsterEffect.effect === 'HORROR';
@@ -31,7 +31,7 @@ const Gameboard: React.FC = () => {
         <h2>Turns</h2>
         <div>
           CURRENT: <br />
-          {currentTurn + 1}
+          {currentTurn + 1 > maxTurns ? maxTurns : currentTurn + 1}
         </div>
         <div>
           PAST: <br />
