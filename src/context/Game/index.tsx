@@ -1,6 +1,6 @@
 import React, { useReducer, useEffect } from 'react';
 import reducer, { initialState } from './reducer';
-import { GAME_START, PLAY_TURN, GAME_WON, GAME_LOST } from './types';
+import { GAME_START, PLAY_TURN, GAME_WON, GAME_LOST, RESTART_GAME } from './types';
 import GameService from '../../services/GameService';
 import { GameState } from '../../types';
 import { createCtx } from '../../utilities';
@@ -12,6 +12,7 @@ type GameContextType = {
     nextTurn: (cardId: string | undefined) => void
     notifyGameIsWon: () => void
     notifyGameIsLost: () => void
+    restartGame: () => void
   }
 };
 
@@ -41,6 +42,10 @@ const GameContextProvider: React.FC = ({ children }) => {
     dispatch({ type: GAME_LOST });
   }
 
+  const restartGame = () => {
+    dispatch({ type: RESTART_GAME });
+  }
+
   useEffect(() => {
     if (state.currentTurn === state.maxTurns) {
       notifyGameIsLost();
@@ -48,7 +53,7 @@ const GameContextProvider: React.FC = ({ children }) => {
   }, [state.currentTurn, state.maxTurns]);
 
   return (
-    <Provider value={{ state, actions: { startGame, nextTurn, notifyGameIsWon, notifyGameIsLost } }}>
+    <Provider value={{ state, actions: { startGame, nextTurn, notifyGameIsWon, notifyGameIsLost, restartGame } }}>
       {children}
     </Provider>
   );

@@ -4,6 +4,7 @@ export const GAME_START = 'GAME_START';
 export const PLAY_TURN = 'PLAY_TURN';
 export const GAME_WON = 'GAME_WON';
 export const GAME_LOST = 'GAME_LOST';
+export const RESTART_GAME = 'RESTART_GAME';
 
 interface StartGameAction {
   type: typeof GAME_START
@@ -29,4 +30,8 @@ interface GameLost {
   type: typeof GAME_LOST;
 }
 
-export type GameActionTypes = StartGameAction | PlayTurn | GameWon | GameLost;
+interface RestartGame {
+  type: typeof RESTART_GAME;
+}
+
+export type GameActionTypes = StartGameAction | PlayTurn | GameWon | GameLost | RestartGame;

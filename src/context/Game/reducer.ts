@@ -1,5 +1,5 @@
 import { GameState, IDLE } from '../../types';
-import { GAME_START, PLAY_TURN, GameActionTypes } from './types';
+import { GAME_START, PLAY_TURN, RESTART_GAME, GAME_WON, GAME_LOST, GameActionTypes } from './types';
 
 export const initialState: GameState = {
   id: '',
@@ -30,6 +30,18 @@ export default function reducer(state = initialState, action: GameActionTypes): 
         turnsLeft: action.payload.game.turnsLeft,
         lastMonsterEffect: action.payload.monsterEffect,
       }
+    case GAME_WON:
+      return {
+        ...state,
+        status: 'WIN'
+      }
+    case GAME_LOST:
+      return {
+        ...state,
+        status: 'LOSE'
+      }
+    case RESTART_GAME:
+      return initialState;
     default:
       return state;
   }

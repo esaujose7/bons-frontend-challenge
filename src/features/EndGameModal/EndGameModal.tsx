@@ -1,11 +1,16 @@
-import React from 'react'
+import React from 'react';
+import { GameResult, WIN } from '../../types';
+import { useGameActions } from '../../context/Game';
 
-type EndGameResult = 'WIN' | 'LOSE';
+const EndGameModal: React.FC<{ result: GameResult }> = ({ result }) => {
+  const { restartGame } = useGameActions();
 
-const EndGameModal: React.FC<{ result: EndGameResult }> = ({ result }) => {
   return (
     <div>
-      {result}
+      {result === WIN ? 'Congratulations! You killed the damn beast.' : 'Oops! You suck !'}
+      <button onClick={restartGame}>
+        Play again?
+      </button>
     </div>
   )
 }
