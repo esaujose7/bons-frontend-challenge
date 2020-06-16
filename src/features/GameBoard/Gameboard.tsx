@@ -24,7 +24,7 @@ const Gameboard: React.FC = () => {
       <div className="gameboard-info" style={{ marginRight: '30px' }}>
         <Enemy />
         <Player />
-        <Cards selectCard={setSelectedCard} />
+        <Cards selectedCard={selectedCard} selectCard={setSelectedCard} />
       </div>
       <div className="gameboard-turns" style={{ display: 'flex', flexDirection: 'column' }}>
         <h2>Turns</h2>
