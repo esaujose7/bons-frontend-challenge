@@ -7,12 +7,13 @@ import { Card } from '../../types';
 import { useGameState, useGameActions } from '../../context/Game';
 
 const Gameboard: React.FC = () => {
-  const { currentTurn, turnsLeft } = useGameState();
+  const { currentTurn, turnsLeft, lastMonsterEffect } = useGameState();
   const { nextTurn } = useGameActions();
   const [selectedCard, setSelectedCard] = React.useState<Card | null>(null);
+  const isLastMonsterEffectHorror = lastMonsterEffect && lastMonsterEffect.effect === 'HORROR';
 
   const endTurn = () => {
-    nextTurn(selectedCard?.id);
+    isLastMonsterEffectHorror ? nextTurn(undefined) : nextTurn(selectedCard?.id) 
   };
 
   React.useEffect(() => {
@@ -24,7 +25,7 @@ const Gameboard: React.FC = () => {
       <div className="gameboard-info" style={{ marginRight: '30px' }}>
         <Enemy />
         <Player />
-        <Cards selectedCard={selectedCard} selectCard={setSelectedCard} />
+        <Cards selectedCard={selectedCard} selectCard={isLastMonsterEffectHorror ? () => {} : setSelectedCard} />
       </div>
       <div className="gameboard-turns" style={{ display: 'flex', flexDirection: 'column' }}>
         <h2>Turns</h2>

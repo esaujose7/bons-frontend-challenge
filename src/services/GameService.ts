@@ -14,7 +14,7 @@ class GameService {
     return api<GameEntity>(`/games/${id}`);
   }
 
-  static playNextTurn(id: string, cardId: string | null = null) {
+  static playNextTurn(id: string, cardId: string | undefined = undefined) {
     if (cardId) {
       return api<{ game: GameEntity, monsterEffect: MonsterEffectsEntity }>(`/games/${id}/next-turn`, {
         method: 'POST',
