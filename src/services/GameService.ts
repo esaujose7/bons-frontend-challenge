@@ -1,4 +1,4 @@
-import { GameEntity, MonsterEffects } from '../types';
+import { GameEntity, MonsterEffectsEntity } from '../types';
 import { api } from '../utilities';
 
 class GameService {
@@ -16,13 +16,13 @@ class GameService {
 
   static playNextTurn(id: string, cardId: string | null = null) {
     if (cardId) {
-      return api<{ game: GameEntity, monsterEffect: { effect: MonsterEffects, value: number } }>(`/games/${id}/next-turn`, {
+      return api<{ game: GameEntity, monsterEffect: MonsterEffectsEntity }>(`/games/${id}/next-turn`, {
         method: 'POST',
         body: JSON.stringify({ card: cardId }),
         headers: { 'Content-Type': 'application/json' }
       });
     }
-    return api<{ game: GameEntity, monsterEffect: { effect: MonsterEffects, value: number } }>(`/games/${id}/next-turn`, { method: 'POST' });
+    return api<{ game: GameEntity, monsterEffect: MonsterEffectsEntity }>(`/games/${id}/next-turn`, { method: 'POST' });
   }
 }
 
