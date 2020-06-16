@@ -1,7 +1,7 @@
 import React, { useReducer, useEffect } from 'react';
 import reducer, { initialState } from './reducer';
-import { GAME_START, PLAY_TURN, GAME_WON, GAME_LOST, RESTART_GAME, GameContextType } from './types';
 import GameService from '../../services/GameService';
+import { GAME_START, PLAY_TURN, GAME_WON, GAME_LOST, RESTART_GAME, GameContextType } from './types';
 import { ONGOING } from '../../types';
 import { createCtx } from '../../utilities';
 
