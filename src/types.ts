@@ -1,3 +1,4 @@
+// Possible states of the game
 export const IDLE = 'IDLE';
 export const ONGOING = 'ONGOING';
 export const WIN = 'WIN';
@@ -14,7 +15,8 @@ export interface GameEntity {
 }
 
 export interface GameState extends GameEntity {
-  status: GameStatus; 
+  status: GameStatus;
+  lastMonsterEffect: null | MonsterEffectsEntity;
 };
 
 export type PlayerEntity = {
@@ -39,12 +41,20 @@ export interface MonsterEntity {
   image: string;
 }
 
-export interface Card {
-  id: string;
-  value: number;
-  effect: PlayerEffects;
-};
-
 export type PlayerEffects = 'HEAL' | 'SHIELD' | 'DAMAGE';
 
+export interface PlayerEffectsEntity {
+  value: number;
+  effect: PlayerEffects;
+}
+
+export interface Card extends PlayerEffectsEntity {
+  id: string;
+};
+
 export type MonsterEffects = PlayerEffects | 'HORROR';
+
+export interface MonsterEffectsEntity {
+  value: number;
+  effect: MonsterEffects;
+}
