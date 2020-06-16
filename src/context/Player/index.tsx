@@ -25,12 +25,12 @@ const PlayerContextProvider: React.FC<Props> = ({ children, gameId, currentTurn 
   const { notifyGameIsLost } = useGameActions();
 
   useEffect(() => {
-      PlayerService.getByGameId(gameId).then(resolveOncePlayerLoaded).catch(err => { console.error('fail loading the user: ', err) }).catch(console.error);
+      PlayerService.getByGameId(gameId).then(resolveOncePlayerLoaded).catch(console.error);
   }, [gameId]);
 
   useEffect(() => {
     if (isPlayerLoaded()) {
-      PlayerService.getById(playerId).then(resolveOncePlayerLoaded).catch(err => { console.error('fail loading the user', err) }).catch(console.error);
+      PlayerService.getById(playerId).then(resolveOncePlayerLoaded).catch(console.error);
     }
   }, [currentTurn]);
 
