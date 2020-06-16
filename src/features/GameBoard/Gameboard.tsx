@@ -4,11 +4,10 @@ import Player from './Player';
 import Cards from './Cards';
 import { Card } from '../../types';
 
-import { useGameState, useGameActions } from '../../context/Game';
+import useGameContext  from '../../context/Game';
 
 const Gameboard: React.FC = () => {
-  const { currentTurn, turnsLeft, lastMonsterEffect, maxTurns } = useGameState();
-  const { nextTurn } = useGameActions();
+  const { state: { currentTurn, turnsLeft, lastMonsterEffect, maxTurns }, actions: { nextTurn } } = useGameContext();
   const [selectedCard, setSelectedCard] = React.useState<Card | null>(null);
   const isLastMonsterEffectHorror = lastMonsterEffect && lastMonsterEffect.effect === 'HORROR';
 
