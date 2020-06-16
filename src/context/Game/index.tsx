@@ -1,20 +1,9 @@
 import React, { useReducer, useEffect } from 'react';
 import reducer, { initialState } from './reducer';
-import { GAME_START, PLAY_TURN, GAME_WON, GAME_LOST, RESTART_GAME } from './types';
+import { GAME_START, PLAY_TURN, GAME_WON, GAME_LOST, RESTART_GAME, GameContextType } from './types';
 import GameService from '../../services/GameService';
-import { GameState, ONGOING } from '../../types';
+import { ONGOING } from '../../types';
 import { createCtx } from '../../utilities';
-
-type GameContextType = {
-  state: GameState,
-  actions: {
-    startGame: (playerName: string) => void,
-    nextTurn: (cardId: string | undefined) => void
-    notifyGameIsWon: () => void
-    notifyGameIsLost: () => void
-    restartGame: () => void
-  }
-};
 
 const [useGameContext, Provider] = createCtx<GameContextType>();
 

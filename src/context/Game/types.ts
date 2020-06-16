@@ -1,4 +1,4 @@
-import { GameEntity, MonsterEffects } from '../../types';
+import { GameEntity, GameState, MonsterEffects } from '../../types';
 
 export const GAME_START = 'GAME_START';
 export const PLAY_TURN = 'PLAY_TURN';
@@ -35,3 +35,14 @@ interface RestartGame {
 }
 
 export type GameActionTypes = StartGameAction | PlayTurn | GameWon | GameLost | RestartGame;
+
+export type GameContextType = {
+  state: GameState,
+  actions: {
+    startGame: (playerName: string) => void,
+    nextTurn: (cardId: string | undefined) => void
+    notifyGameIsWon: () => void
+    notifyGameIsLost: () => void
+    restartGame: () => void
+  }
+};
