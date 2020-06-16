@@ -7,7 +7,7 @@ class MonsterService {
   }
 
   static getById(id: string) {
-    return api<MonsterEntity>(`/players/${id}`);
+    return api<MonsterEntity>(`/monsters/${id}`);
   }
 }
 
