@@ -2,7 +2,7 @@ import React, { useReducer, useEffect } from 'react';
 import reducer, { initialState } from './reducer';
 import { GAME_START, PLAY_TURN, GAME_WON, GAME_LOST, RESTART_GAME } from './types';
 import GameService from '../../services/GameService';
-import { GameState } from '../../types';
+import { GameState, ONGOING } from '../../types';
 import { createCtx } from '../../utilities';
 
 type GameContextType = {
@@ -47,7 +47,7 @@ const GameContextProvider: React.FC = ({ children }) => {
   }
 
   useEffect(() => {
-    if (state.currentTurn === state.maxTurns && state.status === 'ONGOING') {
+    if (state.currentTurn === state.maxTurns && state.status === ONGOING) {
       notifyGameIsLost();
     }
   }, [state.currentTurn, state.maxTurns, state.status]);
