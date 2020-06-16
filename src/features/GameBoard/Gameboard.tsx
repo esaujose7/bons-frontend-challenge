@@ -44,6 +44,9 @@ const Gameboard: React.FC = () => {
         <button onClick={endTurn}>
           END TURN.
         </button>
+        <div>
+          Last monster effect btw: { JSON.stringify(lastMonsterEffect, null, 2) }
+        </div>
       </div>
     </div>
   );
