@@ -16,7 +16,7 @@ const Cards: React.FC<Props> = ({ selectCard, selectedCard }) => {
         let isSelected = selectedCard && selectedCard.id === card.id;
 
         return (
-          <li onClick={() => { selectCard(card); }} style={{ border: isSelected  ? '2px red solid' : '' }} >
+          <li onClick={() => { selectCard(card); }} style={{ border: !!isSelected  ? '2px red solid' : '' }} >
             {card.effect}<br/>
             Amount: {card.value}
           </li>
