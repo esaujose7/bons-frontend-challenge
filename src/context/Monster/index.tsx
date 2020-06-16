@@ -27,7 +27,6 @@ const MonsterContextProvider: React.FC<Props> = ({ children, gameId, currentTurn
     MonsterService.getByGameId(gameId).then(data => dispatch({ type: LOAD_MONSTER, payload: data })).catch(console.error);
   }, [gameId]);
 
-
   useEffect(() => {
     if (isMonsterLoaded()) {
       MonsterService.getById(state.id).then(data => dispatch({ type: LOAD_MONSTER, payload: data })).catch(console.error);
@@ -35,7 +34,7 @@ const MonsterContextProvider: React.FC<Props> = ({ children, gameId, currentTurn
   }, [currentTurn]);
 
   useEffect(() => {
-    if (state.hp <= 0) {
+    if (isMonsterLoaded() && state.hp <= 0) {
       notifyGameIsWon();
     }
   }, [state.hp]);
