@@ -1,5 +1,5 @@
 import React from 'react'
-import ParticipantInfo from '../ParticipantInfo';
+import ParticipantInfo from '../../../components/ParticipantInfo';
 import { usePlayerState } from '../../../context/Player';
 
 const Player = () => {
@@ -10,4 +10,4 @@ const Player = () => {
   )
 }
 
-export default Player
+export default Player;
