@@ -24,7 +24,7 @@ const Login: React.FC = () => {
         <div className="control">
           <input className="input" type="text" name="playerName" id="playerName" value={playerName} onChange={handleOnChange} required />
         </div> 
-        <button className="button mt-2">LET'S PLAY</button>
+        <button className="button mt-2 is-primary">LET'S PLAY</button>
       </form>
     </div>
   );
