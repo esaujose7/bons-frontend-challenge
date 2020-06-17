@@ -1,4 +1,5 @@
 import React from 'react'
+import { default as CardItem } from './Card';
 import { usePlayerState } from '../../../context/Player';
 import { Card } from '../../../types';
 
@@ -11,18 +12,18 @@ const Cards: React.FC<Props> = ({ selectCard, selectedCard }) => {
   const { cards } = usePlayerState();
 
   return (
-    <ul style={{ display: 'flex' }}>
-      {cards.map(card => {
-        let isSelected = selectedCard && selectedCard.id === card.id;
-
-        return (
-          <li onClick={() => { isSelected ? selectCard(null) : selectCard(card); }} style={{ border: !!isSelected  ? '2px red solid' : '' }} >
-            {card.effect}<br/>
-            Amount: {card.value}
-          </li>
-        )
-      })}
-    </ul>
+    <div>
+      <ul className="mt-4 columns is-variable is-multiline is-3">
+        {cards.map(({ id, effect, value }) => (
+          <CardItem 
+            effect={effect}
+            value={value}
+            selected={(selectedCard && selectedCard.id) === id}
+            onClick={selectCard}
+          />
+        ))}
+      </ul>
+    </div>
   );
 };
 

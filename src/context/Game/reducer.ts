@@ -1,9 +1,9 @@
-import { GameState, IDLE } from '../../types';
+import { GameState, IDLE, ONGOING, WIN, LOSE } from '../../types';
 import { GAME_START, PLAY_TURN, RESTART_GAME, GAME_WON, GAME_LOST, GameActionTypes } from './types';
 
 export const initialState: GameState = {
   id: '',
-  status: IDLE,
+  status: ONGOING,
   currentTurn: 0,
   maxTurns: 0,
   turnsLeft: 0,
@@ -20,7 +20,7 @@ export default function reducer(state = initialState, action: GameActionTypes): 
         currentTurn,
         maxTurns,
         turnsLeft,
-        status: 'ONGOING',
+        status: ONGOING,
       };
     case PLAY_TURN:
       return {
@@ -33,12 +33,12 @@ export default function reducer(state = initialState, action: GameActionTypes): 
     case GAME_WON:
       return {
         ...state,
-        status: 'WIN'
+        status: WIN
       }
     case GAME_LOST:
       return {
         ...state,
-        status: 'LOSE'
+        status: LOSE
       }
     case RESTART_GAME:
       return initialState;

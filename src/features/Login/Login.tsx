@@ -17,14 +17,16 @@ const Login: React.FC = () => {
   };
 
   return (
-    <>
+    <div className="container" style={{ width: '50%', height: '100vh' }}>
       <h1>Welcome to Bons Game!</h1>
+      <h2>What's your name?</h2>
       <form onSubmit={handleOnSubmit}>
-        <label htmlFor="playerName">What's your name?</label>
-        <input type="text" name="playerName" id="playerName" value={playerName} onChange={handleOnChange} required />
-        <button>LET'S PLAY</button>
+        <div className="control">
+          <input className="input" type="text" name="playerName" id="playerName" value={playerName} onChange={handleOnChange} required />
+        </div> 
+        <button className="button mt-2">LET'S PLAY</button>
       </form>
-    </>
+    </div>
   );
 };
 

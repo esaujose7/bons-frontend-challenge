@@ -2,51 +2,33 @@ import React from 'react'
 import Enemy from './Enemy';
 import Player from './Player';
 import Cards from './Cards';
+import Turns from './Turns';
 import { Card } from '../../types';
 
 import useGameContext  from '../../context/Game';
 
 const Gameboard: React.FC = () => {
   const { state: { currentTurn, turnsLeft, lastMonsterEffect, maxTurns }, actions: { nextTurn } } = useGameContext();
-  const [selectedCard, setSelectedCard] = React.useState<Card | null>(null);
+  const [card, setCard] = React.useState<Card | null>(null);
   const isLastMonsterEffectHorror = lastMonsterEffect && lastMonsterEffect.effect === 'HORROR';
 
   const endTurn = () => {
-    isLastMonsterEffectHorror ? nextTurn(undefined) : nextTurn(selectedCard?.id) 
+    isLastMonsterEffectHorror ? nextTurn(undefined) : nextTurn(card?.id) 
   };
 
   React.useEffect(() => {
-    setSelectedCard(null);
+    setCard(null);
   }, [currentTurn]);
 
   return (
-    <div style={{ display: 'flex' }}>
-      <div className="gameboard-info" style={{ marginRight: '30px' }}>
+    <div className="container columns mt-4">
+      <div className="gameboard-info column is-offset-2 is-6">
         <Enemy />
         <Player />
-        <Cards selectedCard={selectedCard} selectCard={isLastMonsterEffectHorror ? () => {} : setSelectedCard} />
+        <Cards selectedCard={card} selectCard={isLastMonsterEffectHorror ? () => {} : setCard} />
       </div>
-      <div className="gameboard-turns" style={{ display: 'flex', flexDirection: 'column' }}>
-        <h2>Turns</h2>
-        <div>
-          CURRENT: <br />
-          {currentTurn + 1 > maxTurns ? maxTurns : currentTurn + 1}
-        </div>
-        <div>
-          PAST: <br />
-          {currentTurn}
-        </div>
-        <div>
-          LEFT: <br />
-          {turnsLeft}
-        </div>
-        <button onClick={endTurn}>
-          END TURN.
-        </button>
-        <div>
-          Last monster effect btw: { JSON.stringify(lastMonsterEffect, null, 2) }
-        </div>
-      </div>
+      <Turns endTurn={endTurn} />
+      {isLastMonsterEffectHorror && "You've been horrified! Can't choose a card :("}
     </div>
   );
 }

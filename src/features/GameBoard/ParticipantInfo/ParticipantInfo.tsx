@@ -9,13 +9,15 @@ interface Props {
 
 const ParticipantInfo: React.FC<Props> = ({ name, hp, maxHp, shield }) => {
   return (
-    <div style={{ display: 'flex' }}>
-      <div className="hp-name" style={{ marginRight: '20px' }}>
-        {name}<br/>
-        HP: {hp} / {maxHp}
-      </div>
-      <div className="shield">
-        Shield: {shield}
+    <div className="card">
+      <div className="card-content">
+        <div className="hp-name">
+          <strong>{name}</strong><br/>
+          <strong>HP: </strong>{hp} / {maxHp}
+        </div>
+        <div className="shield">
+          <strong>Shield:</strong> {shield}
+        </div>
       </div>
     </div>
   );

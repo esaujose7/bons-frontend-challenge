@@ -7,7 +7,7 @@ export const initialState: PlayerState = {
   maxHp: 0,
   shield: 0,
   name: '',
-  cards: []
+  cards: [{id: '2',effect: 'HEAL', value: 3 }, {id: '2',effect: 'HEAL', value: 3 }, {id: '2',effect: 'HEAL', value: 3 }, {id: '2',effect: 'HEAL', value: 3 }]
 };
 
 export default function reducer(state = initialState, action: PlayerActionTypes): PlayerState {
