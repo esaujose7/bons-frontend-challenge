@@ -10,25 +10,25 @@ const [usePlayerContext, Provider] = createCtx<PlayerContextType>();
 const PlayerContextProvider: React.FC<PlayerContextProps> = ({ children, gameId, currentTurn }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const isPlayerLoaded = useCallback(() => state.id !== '', [state.id]);
-  const { notifyGameIsLost } = useGameActions();
+  const { notifyGameIsLost, notifyError } = useGameActions();
 
-  useEffect(() => {
-      PlayerService.getByGameId(gameId).then((data) => dispatch({ type: LOAD_PLAYER, payload: data })).catch(console.error);
+  useEffect(() => { // load player initially by gameId
+      PlayerService.getByGameId(gameId).then((data) => dispatch({ type: LOAD_PLAYER, payload: data })).catch(notifyError);
   }, [gameId]);
 
-  useEffect(() => {
+  useEffect(() => { // afterwards, load the player after each turn
     if (isPlayerLoaded()) {
-      PlayerService.getById(state.id).then((data) => dispatch({ type: LOAD_PLAYER, payload: data })).catch(console.error);
+      PlayerService.getById(state.id).then((data) => dispatch({ type: LOAD_PLAYER, payload: data })).catch(notifyError);
     }
   }, [currentTurn]);
 
-  useEffect(() => {
+  useEffect(() => { // load the cards once the player has been loaded, and load cards after each turn.
     if (isPlayerLoaded()) {
-      PlayerService.getCards(state.id).then(data => dispatch({ type: LOAD_CARDS, payload: data })).catch(console.error);
+      PlayerService.getCards(state.id).then(data => dispatch({ type: LOAD_CARDS, payload: data })).catch(notifyError);
     }
   }, [currentTurn, state.id]);
 
-  useEffect(() => {
+  useEffect(() => { // if we run out of hp, then we lost the game.
     if (isPlayerLoaded() && state.hp <= 0) {
       notifyGameIsLost();
     }

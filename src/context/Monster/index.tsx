@@ -11,19 +11,19 @@ const MonsterContextProvider: React.FC<Props> = ({ children, gameId, currentTurn
   const [state, dispatch] = useReducer(reducer, initialState);
   const monsterId = state.id;
   const isMonsterLoaded = () => monsterId !== '';
-  const { notifyGameIsWon } = useGameActions();
+  const { notifyGameIsWon, notifyError } = useGameActions();
 
-  useEffect(() => {
-    MonsterService.getByGameId(gameId).then(data => dispatch({ type: LOAD_MONSTER, payload: data })).catch(console.error);
+  useEffect(() => { // initially, load the monster by gameId.
+    MonsterService.getByGameId(gameId).then(data => dispatch({ type: LOAD_MONSTER, payload: data })).catch(notifyError);
   }, [gameId]);
 
-  useEffect(() => {
-    if (isMonsterLoaded()) {
-      MonsterService.getById(state.id).then(data => dispatch({ type: LOAD_MONSTER, payload: data })).catch(console.error);
+  useEffect(() => { // afterwards, load the monster after each turn
+    if (isMonsterLoaded()) { // we prevent fetching twice on initial load with this if statement
+      MonsterService.getById(state.id).then(data => dispatch({ type: LOAD_MONSTER, payload: data })).catch(notifyError);
     }
   }, [currentTurn]);
 
-  useEffect(() => {
+  useEffect(() => { // if we have our monster loaded already and it runs out of hp, then we won the game!
     if (isMonsterLoaded() && state.hp <= 0) {
       notifyGameIsWon();
     }
