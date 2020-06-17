@@ -6,9 +6,10 @@ import { Card } from '../../../types';
 interface Props {
   setCard: (card: Card | null) => void,
   selectedCard: Card | null,
+  disabled: boolean,
 }
 
-const Cards: React.FC<Props> = ({ setCard, selectedCard }) => {
+const Cards: React.FC<Props> = ({ setCard, selectedCard, disabled }) => {
   const { cards } = usePlayerState();
 
   return (
@@ -17,6 +18,7 @@ const Cards: React.FC<Props> = ({ setCard, selectedCard }) => {
         {cards.map(card => (
           <CardItem
             key={card.id}
+            disabled={disabled}
             card={card}
             selected={selectedCard !== null && selectedCard.id === card.id}
             setCard={setCard}
