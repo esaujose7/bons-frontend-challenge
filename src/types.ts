@@ -3,9 +3,10 @@ export const IDLE = 'IDLE';
 export const ONGOING = 'ONGOING';
 export const WIN = 'WIN';
 export const LOSE = 'LOSE';
+export const ERROR = 'ERROR';
 
 export type GameResult = typeof WIN | typeof LOSE;
-export type GameStatus = typeof IDLE | typeof ONGOING | GameResult;
+export type GameStatus = typeof IDLE | typeof ONGOING | typeof ERROR | GameResult;
 
 export interface GameEntity {
   id: string;

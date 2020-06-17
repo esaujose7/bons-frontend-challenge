@@ -5,6 +5,8 @@ export const PLAY_TURN = 'PLAY_TURN';
 export const GAME_WON = 'GAME_WON';
 export const GAME_LOST = 'GAME_LOST';
 export const RESTART_GAME = 'RESTART_GAME';
+export const GAME_ERROR = 'GAME_ERROR';
+export const GAME_LOAD_AFTER_ERROR = 'GAME_LOAD_AFTER_ERROR';
 
 interface StartGameAction {
   type: typeof GAME_START
@@ -34,7 +36,17 @@ interface RestartGame {
   type: typeof RESTART_GAME;
 }
 
-export type GameActionTypes = StartGameAction | PlayTurn | GameWon | GameLost | RestartGame;
+interface GameError {
+  type: typeof GAME_ERROR;
+  payload: Error
+};
+
+interface GameLoadAfterError {
+  type: typeof GAME_LOAD_AFTER_ERROR;
+  payload: GameEntity
+}
+
+export type GameActionTypes = StartGameAction | PlayTurn | GameWon | GameLost | RestartGame | GameError | GameLoadAfterError;
 
 export type GameContextType = {
   state: GameState,
@@ -44,5 +56,7 @@ export type GameContextType = {
     notifyGameIsWon: () => void
     notifyGameIsLost: () => void
     restartGame: () => void
+    notifyError: (err: Error) => void
+    loadGameAfterError: () => void
   }
 };

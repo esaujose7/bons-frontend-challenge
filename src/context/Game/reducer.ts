@@ -1,5 +1,5 @@
-import { GameState, IDLE, ONGOING, WIN, LOSE } from '../../types';
-import { GAME_START, PLAY_TURN, RESTART_GAME, GAME_WON, GAME_LOST, GameActionTypes } from './types';
+import { GameState, IDLE, ONGOING, WIN, LOSE, ERROR } from '../../types';
+import { GAME_START, PLAY_TURN, RESTART_GAME, GAME_WON, GAME_LOST, GAME_ERROR, GAME_LOAD_AFTER_ERROR, GameActionTypes } from './types';
 
 export const initialState: GameState = {
   id: '',
@@ -40,8 +40,19 @@ export default function reducer(state = initialState, action: GameActionTypes): 
         ...state,
         status: LOSE
       }
+    case GAME_ERROR:
+      return {
+        ...state,
+        status: ERROR
+      }
     case RESTART_GAME:
       return initialState;
+    case GAME_LOAD_AFTER_ERROR:
+      return {
+        ...state,
+        ...action.payload,
+        status: ONGOING,
+      }
     default:
       return state;
   }
