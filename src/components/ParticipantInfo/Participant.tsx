@@ -1,5 +1,5 @@
 import React from 'react'
-
+import './style.scss';
 interface Props {
   name: string,
   hp: number,
@@ -8,11 +8,11 @@ interface Props {
   image?: string | null,
 }
 
-const ParticipantInfo: React.FC<Props> = ({ name, hp, maxHp, shield, image = null }) => (
+const ParticipantInfo: React.FC<Props> = ({ children, name, hp, maxHp, shield, image = null }) => (
   <div className="card">
     <div className="card-content">
       {image && (
-        <div>
+        <div className="image">
           <img src={image} alt={`Participant: ${name}`} />
         </div>
       )}
@@ -23,6 +23,7 @@ const ParticipantInfo: React.FC<Props> = ({ name, hp, maxHp, shield, image = nul
       <div className="shield">
         <strong>Shield:</strong> {shield}
       </div>
+      {children}
     </div>
   </div>
 );
