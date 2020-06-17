@@ -16,11 +16,11 @@ const Login: React.FC = () => {
     }
   };
 
-  return (      
+  return (
     <form onSubmit={handleOnSubmit}>
       <div className="control">
         <input className="input" type="text" name="playerName" id="playerName" value={playerName} onChange={handleOnChange} required />
-      </div> 
+      </div>
       <button className="button mt-2 is-primary">LET'S PLAY</button>
     </form>
   );
