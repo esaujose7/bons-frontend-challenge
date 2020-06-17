@@ -3,7 +3,7 @@ import { GAME_START, PLAY_TURN, RESTART_GAME, GAME_WON, GAME_LOST, GameActionTyp
 
 export const initialState: GameState = {
   id: '',
-  status: ONGOING,
+  status: IDLE,
   currentTurn: 0,
   maxTurns: 0,
   turnsLeft: 0,
