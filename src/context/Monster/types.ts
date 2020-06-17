@@ -8,3 +8,13 @@ interface LoadMonsterAction {
 }
 
 export type MonsterActionTypes = LoadMonsterAction;
+
+
+export type Props = {
+  gameId: string,
+  currentTurn: number
+};
+
+export type MonsterContextType = {
+  state: MonsterEntity;
+}

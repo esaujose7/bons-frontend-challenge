@@ -2,18 +2,8 @@ import React, { useReducer, useEffect } from 'react';
 import reducer, { initialState } from './reducer';
 import MonsterService from '../../services/MonsterService';
 import { createCtx } from '../../utilities';
-import { MonsterEntity } from '../../types';
-import {LOAD_MONSTER} from './types'
+import { LOAD_MONSTER, MonsterContextType, Props } from './types'
 import { useGameActions } from '../Game';
-
-type Props = {
-  gameId: string,
-  currentTurn: number
-};
-
-type MonsterContextType = {
-  state: MonsterEntity;
-}
 
 const [useMonsterContext, Provider] = createCtx<MonsterContextType>();
 
