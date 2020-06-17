@@ -1,44 +1,32 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect, useCallback } from 'react';
 import PlayerService from '../../services/PlayerService';
 import reducer, { initialState } from './reducer';
-import { PlayerState, PlayerEntity } from '../../types';
 import { createCtx } from '../../utilities';
-import { LOAD_CARDS, LOAD_PLAYER } from './types';
+import { LOAD_CARDS, LOAD_PLAYER, PlayerContextType, PlayerContextProps } from './types';
 import { useGameActions } from '../Game';
-
-type Props = {
-  gameId: string,
-  currentTurn: number
-};
-
-type PlayerContextType = {
-  state: PlayerState
-};
 
 const [usePlayerContext, Provider] = createCtx<PlayerContextType>();
 
-const PlayerContextProvider: React.FC<Props> = ({ children, gameId, currentTurn }) => {
+const PlayerContextProvider: React.FC<PlayerContextProps> = ({ children, gameId, currentTurn }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const playerId = state.id;
-  const resolveOncePlayerLoaded = (data: PlayerEntity) => dispatch({ type: LOAD_PLAYER, payload: data })
-  const isPlayerLoaded = () => playerId !== '';
+  const isPlayerLoaded = useCallback(() => state.id !== '', [state.id]);
   const { notifyGameIsLost } = useGameActions();
 
   useEffect(() => {
-      PlayerService.getByGameId(gameId).then(resolveOncePlayerLoaded).catch(console.error);
+      PlayerService.getByGameId(gameId).then((data) => dispatch({ type: LOAD_PLAYER, payload: data })).catch(console.error);
   }, [gameId]);
 
   useEffect(() => {
     if (isPlayerLoaded()) {
-      PlayerService.getById(playerId).then(resolveOncePlayerLoaded).catch(console.error);
+      PlayerService.getById(state.id).then((data) => dispatch({ type: LOAD_PLAYER, payload: data })).catch(console.error);
     }
   }, [currentTurn]);
 
   useEffect(() => {
     if (isPlayerLoaded()) {
-      PlayerService.getCards(playerId).then(data => dispatch({ type: LOAD_CARDS, payload: data })).catch(console.error);
+      PlayerService.getCards(state.id).then(data => dispatch({ type: LOAD_CARDS, payload: data })).catch(console.error);
     }
-  }, [currentTurn, playerId]);
+  }, [currentTurn, state.id]);
 
   useEffect(() => {
     if (isPlayerLoaded() && state.hp <= 0) {

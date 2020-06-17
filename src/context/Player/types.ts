@@ -1,4 +1,4 @@
-import { PlayerEntity, Card } from '../../types';
+import { PlayerState, PlayerEntity, Card } from '../../types';
 
 export const LOAD_PLAYER = 'LOAD_PLAYER';
 export const LOAD_CARDS = 'LOAD_CARDS';
@@ -14,3 +14,12 @@ interface LoadPlayerCardsAction {
 }
 
 export type PlayerActionTypes = LoadPlayerAction | LoadPlayerCardsAction;
+
+export type PlayerContextType = {
+  state: PlayerState
+};
+
+export type PlayerContextProps = {
+  gameId: string,
+  currentTurn: number
+};
