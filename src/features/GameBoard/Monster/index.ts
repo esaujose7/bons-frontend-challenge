@@ -1,3 +1,3 @@
-import Enemy from './Monster';
+import Monster from './Monster';
 
-export default Enemy;
+export default Monster;
