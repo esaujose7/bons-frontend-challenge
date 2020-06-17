@@ -23,5 +23,3 @@ export function createCtx<ContextType>() {
   }
   return [useCtx, ctx.Provider] as const;
 }
-
-export const noop = () => {};
