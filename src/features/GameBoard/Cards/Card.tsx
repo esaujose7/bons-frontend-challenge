@@ -1,12 +1,17 @@
-import React from 'react'
+import React from 'react';
+import { Card as CardType } from '../../../types';
 
-const Card: React.FC<{ effect: string, value: number, onClick: Function, selected: boolean }> = ({ effect, value }) => {
-  return (
-    <li className="column is-4">
-      {effect}<br/>
-      Amount: {value}
-    </li>
-  );
+type Props = {
+  card: CardType,
+  setCard: (card: CardType | null) => void,
+  selected: boolean,
 };
+
+const Card: React.FC<Props> = ({ card, setCard, selected }) => (
+  <li className={`column is-4 ${selected ? 'is-primary' : ''}`} onClick={() => { setCard(selected ? null : card); }}>
+    {card.effect}<br/>
+    Amount: {card.value}
+  </li>
+);
 
 export default Card;

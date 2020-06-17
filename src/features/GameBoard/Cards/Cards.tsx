@@ -4,22 +4,22 @@ import { usePlayerState } from '../../../context/Player';
 import { Card } from '../../../types';
 
 interface Props {
-  selectCard: Function,
+  setCard: (card: Card | null) => void,
   selectedCard: Card | null,
 }
 
-const Cards: React.FC<Props> = ({ selectCard, selectedCard }) => {
+const Cards: React.FC<Props> = ({ setCard, selectedCard }) => {
   const { cards } = usePlayerState();
 
   return (
     <div>
       <ul className="mt-4 columns is-variable is-multiline is-3">
-        {cards.map(({ id, effect, value }) => (
-          <CardItem 
-            effect={effect}
-            value={value}
-            selected={(selectedCard && selectedCard.id) === id}
-            onClick={selectCard}
+        {cards.map(card => (
+          <CardItem
+            key={card.id}
+            card={card}
+            selected={selectedCard !== null && selectedCard.id === card.id}
+            setCard={setCard}
           />
         ))}
       </ul>
