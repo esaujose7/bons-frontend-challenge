@@ -16,17 +16,13 @@ const Login: React.FC = () => {
     }
   };
 
-  return (
-    <div className="container" style={{ width: '50%', height: '100vh' }}>
-      <h1>Welcome to Bons Game!</h1>
-      <h2>What's your name?</h2>
-      <form onSubmit={handleOnSubmit}>
-        <div className="control">
-          <input className="input" type="text" name="playerName" id="playerName" value={playerName} onChange={handleOnChange} required />
-        </div> 
-        <button className="button mt-2 is-primary">LET'S PLAY</button>
-      </form>
-    </div>
+  return (      
+    <form onSubmit={handleOnSubmit}>
+      <div className="control">
+        <input className="input" type="text" name="playerName" id="playerName" value={playerName} onChange={handleOnChange} required />
+      </div> 
+      <button className="button mt-2 is-primary">LET'S PLAY</button>
+    </form>
   );
 };
 
