@@ -25,23 +25,16 @@ const PlayerContextProvider: React.FC<PlayerContextProps> = ({ children, gameId,
     if (isPlayerLoaded()) {
       setIsloading(true);
       PlayerService.getById(state.id)
-        .then((data) => dispatch({ type: LOAD_PLAYER, payload: data }))
-        .catch(notifyError)
-        .finally(() => { setIsloading(false); });
-      ;
+        .then((data) => {
+          dispatch({ type: LOAD_PLAYER, payload: data });
+          PlayerService.getCards(data.id)
+            .then(data => dispatch({ type: LOAD_CARDS, payload: data }))
+            .catch(notifyError)
+            .finally(() => { setIsloading(false); });
+        })
+        .catch(notifyError);
     }
   }, [currentTurn]);
-
-  useEffect(() => { // load the cards once the player has been loaded and load cards after each turn.
-    if (isPlayerLoaded()) {
-      setIsloading(true);
-      PlayerService.getCards(state.id)
-        .then(data => dispatch({ type: LOAD_CARDS, payload: data }))
-        .catch(notifyError)
-        .finally(() => { setIsloading(false); });
-      ;
-    }
-  }, [currentTurn, state.id]);
 
   return (
     <Provider value={{ state: { ...state, isLoading } }}>
