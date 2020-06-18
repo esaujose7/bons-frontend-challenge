@@ -18,7 +18,6 @@ export interface GameEntity {
 export interface GameState extends GameEntity {
   status: GameStatus;
   lastMonsterEffect: null | MonsterEffectsEntity;
-  isLoading: boolean;
 };
 
 export type PlayerEntity = {
@@ -31,7 +30,6 @@ export type PlayerEntity = {
 };
 
 export interface PlayerState extends PlayerEntity {
-  isLoading: boolean;
 };
 
 export interface MonsterEntity {
@@ -44,7 +42,6 @@ export interface MonsterEntity {
 }
 
 export interface MonsterState extends MonsterEntity {
-  isLoading: boolean;
 }
 
 export type PlayerEffects = 'HEAL' | 'SHIELD' | 'DAMAGE';
@@ -63,4 +60,8 @@ export type MonsterEffects = PlayerEffects | 'HORROR';
 export interface MonsterEffectsEntity {
   value: number;
   effect: MonsterEffects;
+}
+
+export type isLoading = {
+  isLoading: boolean;
 }

@@ -1,4 +1,4 @@
-import { MonsterEntity, MonsterState } from '../../types';
+import { MonsterEntity, MonsterState, isLoading } from '../../types';
 
 export const LOAD_MONSTER = 'LOAD_MONSTER';
 
@@ -16,5 +16,5 @@ export type Props = {
 };
 
 export type MonsterContextType = {
-  state: MonsterState;
-}
+  state: MonsterState & isLoading;
+};

@@ -1,4 +1,4 @@
-import { PlayerState, PlayerEntity, Card } from '../../types';
+import { PlayerState, PlayerEntity, Card, isLoading } from '../../types';
 
 export const LOAD_PLAYER = 'LOAD_PLAYER';
 export const LOAD_CARDS = 'LOAD_CARDS';
@@ -16,7 +16,7 @@ interface LoadPlayerCardsAction {
 export type PlayerActionTypes = LoadPlayerAction | LoadPlayerCardsAction;
 
 export type PlayerContextType = {
-  state: PlayerState
+  state: PlayerState & isLoading;
 };
 
 export type PlayerContextProps = {
