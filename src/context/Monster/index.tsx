@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect, useState } from 'react';
 import reducer, { initialState } from './reducer';
 import MonsterService from '../../services/MonsterService';
 import { createCtx } from '../../utilities';
@@ -9,28 +9,31 @@ const [useMonsterContext, Provider] = createCtx<MonsterContextType>();
 
 const MonsterContextProvider: React.FC<Props> = ({ children, gameId, currentTurn }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [isLoading, setIsLoading] = useState(false);
   const monsterId = state.id;
   const isMonsterLoaded = () => monsterId !== '';
-  const { notifyGameIsWon, notifyError } = useGameActions();
+  const { notifyError } = useGameActions();
 
   useEffect(() => { // initially, load the monster by gameId.
-    MonsterService.getByGameId(gameId).then(data => dispatch({ type: LOAD_MONSTER, payload: data })).catch(notifyError);
+    setIsLoading(true);
+    MonsterService.getByGameId(gameId)
+      .then(data => dispatch({ type: LOAD_MONSTER, payload: data }))
+      .catch(notifyError)
+      .finally(() => { setIsLoading(false); });
   }, [gameId]);
 
   useEffect(() => { // afterwards, load the monster after each turn
+    setIsLoading(true);
     if (isMonsterLoaded()) { // we prevent fetching twice on initial load with this if statement
-      MonsterService.getById(state.id).then(data => dispatch({ type: LOAD_MONSTER, payload: data })).catch(notifyError);
+      MonsterService.getById(state.id)
+        .then(data => dispatch({ type: LOAD_MONSTER, payload: data }))
+        .catch(notifyError)
+        .finally(() => { setIsLoading(false); });
     }
   }, [currentTurn]);
 
-  useEffect(() => { // if we have our monster loaded already and it runs out of hp, then we won the game!
-    if (isMonsterLoaded() && state.hp <= 0) {
-      notifyGameIsWon();
-    }
-  }, [state.hp]);
-
   return (
-    <Provider value={{ state }}>
+    <Provider value={{ state: { ...state, isLoading } }}>
       {children}
     </Provider>
   );
@@ -42,4 +45,3 @@ function useMonsterState() {
 }
 
 export { useMonsterContext as default, MonsterContextProvider, useMonsterState };
-

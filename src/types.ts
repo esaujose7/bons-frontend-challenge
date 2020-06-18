@@ -18,6 +18,7 @@ export interface GameEntity {
 export interface GameState extends GameEntity {
   status: GameStatus;
   lastMonsterEffect: null | MonsterEffectsEntity;
+  isLoading: boolean;
 };
 
 export type PlayerEntity = {
@@ -30,7 +31,7 @@ export type PlayerEntity = {
 };
 
 export interface PlayerState extends PlayerEntity {
-
+  isLoading: boolean;
 };
 
 export interface MonsterEntity {
@@ -40,6 +41,10 @@ export interface MonsterEntity {
   shield: number;
   name: string;
   image: string;
+}
+
+export interface MonsterState extends MonsterEntity {
+  isLoading: boolean;
 }
 
 export type PlayerEffects = 'HEAL' | 'SHIELD' | 'DAMAGE';
