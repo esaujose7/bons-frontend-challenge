@@ -11,34 +11,34 @@ import { useMonsterState } from '../../context/Monster';
 
 const Gameboard: React.FC = () => {
   const {
-    state: { currentTurn, maxTurns, lastMonsterEffect, id: gameId, isLoading: isGameLoading, status },
+    state: { currentTurn, maxTurns, lastMonsterEffect, isLoading: isGameLoading },
     actions: { nextTurn, notifyGameIsLost, notifyGameIsWon }
   } = useGameContext();
   const isLastMonsterEffectHorror = lastMonsterEffect && lastMonsterEffect.effect === 'HORROR';
 
   const [card, setCard] = useState<Card | null>(null);
-  const { hp: playerHp, id: playerId, isLoading: isPlayerLoading } = usePlayerState();
-  const { hp: monsterHp, id: monsterId, isLoading: isMonsterLoading } = useMonsterState();
+  const { hp: playerHp, isLoading: isPlayerLoading } = usePlayerState();
+  const { hp: monsterHp, isLoading: isMonsterLoading } = useMonsterState();
 
   const isLoading = [isGameLoading, isPlayerLoading, isMonsterLoading].some(Boolean); // if any of the latter is loading, return true
 
   useEffect(() => {
-    if (status === ONGOING && monsterId !== '' && monsterHp <= 0) { // monster died, we won
+    if (!isLoading && monsterHp <= 0) { // monster died, we won
       notifyGameIsWon();
     }
-  }, [monsterHp]);
+  }, [monsterHp, isLoading]);
 
   useEffect(() => {
-    if (status === ONGOING && playerId !== '' && playerHp <= 0) {// we died
+    if (!isLoading && playerHp <= 0) {// we died
       notifyGameIsLost();
     }
-  }, [playerHp]);
+  }, [playerHp, isLoading]);
 
   useEffect(() => {
-    if (status === ONGOING && gameId !== '' && currentTurn === maxTurns) { // we ran out of turns
+    if (!isLoading && currentTurn === maxTurns) { // we ran out of turns
       notifyGameIsLost();
     }
-  }, [currentTurn, maxTurns]);
+  }, [currentTurn, maxTurns, isLoading]);
 
   useEffect(() => {
     setCard(null);
