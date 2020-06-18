@@ -16,10 +16,6 @@ import './App.scss';
 const App: React.FC = () => {
   const { id: gameId, currentTurn, status: gameStatus } = useGameState();
 
-  if (gameStatus === ERROR) {
-    return <ErrorGameModal />
-  }
-
   if (gameStatus === IDLE) {
     return (
       <div className="container">
@@ -28,6 +24,10 @@ const App: React.FC = () => {
         <Login />
       </div>
     );
+  }
+
+  if (gameStatus === ERROR) {
+    return <ErrorGameModal />
   }
 
   return (
@@ -40,6 +40,6 @@ const App: React.FC = () => {
       </PlayerContextProvider>
     </>
   );
-}
+};
 
 export default App;
