@@ -3,7 +3,7 @@ import Monster from './Monster';
 import Player from './Player';
 import Cards from './Cards';
 import Turns from './Turns';
-import { Card, ONGOING } from '../../types';
+import { Card } from '../../types';
 
 import useGameContext  from '../../context/Game';
 import { usePlayerState } from '../../context/Player';
@@ -20,7 +20,7 @@ const Gameboard: React.FC = () => {
   const { hp: playerHp, isLoading: isPlayerLoading } = usePlayerState();
   const { hp: monsterHp, isLoading: isMonsterLoading } = useMonsterState();
 
-  const isLoading = [isGameLoading, isPlayerLoading, isMonsterLoading].some(Boolean); // if any of the latter is loading, return true
+  const isLoading = [isGameLoading, isPlayerLoading, isMonsterLoading].some(Boolean); // if any of the latter is loading, returns true
 
   useEffect(() => {
     if (!isLoading && monsterHp <= 0) { // monster died, we won
@@ -29,13 +29,13 @@ const Gameboard: React.FC = () => {
   }, [monsterHp, isLoading]);
 
   useEffect(() => {
-    if (!isLoading && playerHp <= 0) {// we died
+    if (!isLoading && playerHp <= 0) { // we died, we lost
       notifyGameIsLost();
     }
   }, [playerHp, isLoading]);
 
   useEffect(() => {
-    if (!isLoading && currentTurn === maxTurns) { // we ran out of turns
+    if (!isLoading && currentTurn === maxTurns) { // we ran out of turns, we lost
       notifyGameIsLost();
     }
   }, [currentTurn, maxTurns, isLoading]);
