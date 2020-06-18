@@ -10,12 +10,17 @@ import { usePlayerState } from '../../context/Player';
 import { useMonsterState } from '../../context/Monster';
 
 const Gameboard: React.FC = () => {
-  const { state: { currentTurn, maxTurns, lastMonsterEffect, id: gameId, status }, actions: { nextTurn, notifyGameIsLost, notifyGameIsWon } } = useGameContext();
+  const {
+    state: { currentTurn, maxTurns, lastMonsterEffect, id: gameId, isLoading: isGameLoading, status },
+    actions: { nextTurn, notifyGameIsLost, notifyGameIsWon }
+  } = useGameContext();
   const isLastMonsterEffectHorror = lastMonsterEffect && lastMonsterEffect.effect === 'HORROR';
 
   const [card, setCard] = useState<Card | null>(null);
-  const { hp: playerHp, id: playerId } = usePlayerState();
-  const { hp: monsterHp, id: monsterId } = useMonsterState();
+  const { hp: playerHp, id: playerId, isLoading: isPlayerLoading } = usePlayerState();
+  const { hp: monsterHp, id: monsterId, isLoading: isMonsterLoading } = useMonsterState();
+
+  const isLoading = [isGameLoading, isPlayerLoading, isMonsterLoading].some(Boolean); // if any of the latter is loading, return true
 
   useEffect(() => {
     if (status === ONGOING && monsterId !== '' && monsterHp <= 0) { // monster died, we won
@@ -44,10 +49,10 @@ const Gameboard: React.FC = () => {
       <div className="gameboard-info column is-offset-2 is-6">
         <Monster lastMonsterEffect={lastMonsterEffect} />
         <Player />
-        <Cards selectedCard={card} disabled={!!isLastMonsterEffectHorror} setCard={setCard} />
+        <Cards selectedCard={card} disabled={!!isLastMonsterEffectHorror || isLoading} setCard={setCard} />
         {isLastMonsterEffectHorror && "You've been horrified! Can't choose a card for this turn :("}
       </div>
-      <Turns endTurn={() => { nextTurn(card?.id); }} />
+      <Turns endTurn={() => { nextTurn(card?.id); }} disabled={isLoading} />
     </div>
   );
 }
