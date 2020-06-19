@@ -14,8 +14,6 @@ The useEffect is crucial for fetching the new resource states after each turn, a
 
 Then, on the GameBoard feature we will have the main logic for determining if we win or lose the game based on certain state of the resources.
 
-I recognize that perhaps the error and loading state handling could be cleaner, the error one using ErrorBoundaries and the loading state being part of each resource reducer.
-
 ## Available Scripts
 
 In the project directory, you can run:
